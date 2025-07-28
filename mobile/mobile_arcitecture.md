@@ -27,7 +27,7 @@ The mobile app focuses on campaign management on-the-go: uploading contact files
 │   ├── campaignService.ts       # API interactions
 │   └── analyticsService.ts      # Get analytics data
 ├── store
-│   ├── useCampaignStore.ts      # Zustand for campaign state
+│   ├── useCampaignStore.ts      # React-Redux for campaign state
 │   ├── useContactStore.ts       # Parsed contacts + errors
 │   └── useAnalyticsStore.ts     # Open/click stats
 ├── navigation
@@ -39,7 +39,7 @@ The mobile app focuses on campaign management on-the-go: uploading contact files
 ├── App.tsx
 ├── assets
 │   └── images, icons
-├── app.json / expo config       # If using Expo
+├── app.json 
 ├── tsconfig.json
 └── package.json
 ```
@@ -58,7 +58,7 @@ The mobile app focuses on campaign management on-the-go: uploading contact files
 - Encapsulated logic for API interaction and file parsing
 
 ### `store/`
-- Zustand stores for contacts, campaigns, analytics
+- React-Redux stores for contacts, campaigns, analytics
 
 ### `navigation/`
 - App stack using React Navigation for screen transitions
@@ -72,7 +72,7 @@ The mobile app focuses on campaign management on-the-go: uploading contact files
 ---
 
 ## Where State Lives
-- Global state (via Zustand): 
+- Global state (via React-Redux): 
   - Uploaded contact info and validation errors
   - Composed email body and selected contact list
   - Campaigns list and individual campaign data
@@ -93,7 +93,7 @@ The mobile app focuses on campaign management on-the-go: uploading contact files
 
 ## Extra Feature (Mobile): Voice-to-Email Composer
 
-- Use `expo-speech` and `expo-speech-to-text` or `react-native-voice`
+- Use `react-native-voice`
 - On Compose screen: microphone button triggers speech input
 - Converts speech to text → populates email body
 - Allows quick campaign writing on-the-go

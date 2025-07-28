@@ -1,18 +1,17 @@
-# MVP Build Plan: Prophet Mobile (React Native)
+# MVP Build Plan: Prophet Mobile (React Native CLI)
 
 Each task is small, testable, and has a clear start + end.
-Assumes you’re using Expo.
 
 ---
 
 ### ⚙️ Setup & Base Project
 
-1. **Initialize Expo App**
-   - Run `npx create-expo-app prophet-mobile -t expo-template-blank-typescript`
+1. **Initialize App**
+   - Run `npx  @react-native-community/cli@latest init prophet-mobile -t`
    - Confirm app runs on device/simulator
 
 2. **Install Dependencies**
-   - `zustand`, `react-native-paper`, `axios`, `react-hook-form`, `xlsx`, `react-native-document-picker`, `victory-native`
+   - `React-Redux`, `react-native-paper`, `axios`, `react-hook-form`, `xlsx`, `react-native-document-picker`, `victory-native`, `redux`
 
 3. **Setup Folder Structure**
    - Create folders: `screens/`, `components/`, `services/`, `store/`, `navigation/`, `utils/`, `constants/`
@@ -50,7 +49,7 @@ Assumes you’re using Expo.
    - Inputs for subject, body (TextInput), select file button
    - Validate required fields
 
-10. **Store Data in Zustand (Campaign)**
+10. **Store Data in React-Redux (Campaign)**
    - Use `useCampaignStore` to hold subject, body, contact list
 
 11. **Add Preview Section**
@@ -68,7 +67,7 @@ Assumes you’re using Expo.
    - Reset form and show confirmation
 
 14. **Build CampaignsScreen**
-   - Show list of campaigns stored in Zustand
+   - Show list of campaigns stored in React-Redux
    - Each item: name, status, date
 
 15. **Implement Campaign Detail Screen**
@@ -92,7 +91,7 @@ Assumes you’re using Expo.
 ### 🎙️ Bonus: Voice-to-Email
 
 19. **Install Voice Lib**
-   - Use `react-native-voice` or `expo-speech-to-text`
+   - Use `react-native-voice`
 
 20. **Add Microphone Button to ComposeScreen**
    - Tap to convert voice to text → insert into body input
