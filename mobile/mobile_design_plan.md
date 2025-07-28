@@ -14,7 +14,7 @@ Prophet’s mobile experience needs to be optimized for clarity, fast interactio
 ---
 
 ## 3. Technical Architecture
-- **React Native + Expo**
+- **React Native CLI**
 - **NativeWind (Tailwind CSS for RN)**
 - **react-native-paper** for base components
 - **react-navigation** for structured stacks

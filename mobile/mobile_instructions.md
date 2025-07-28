@@ -7,7 +7,7 @@ Each task is small, testable, and has a clear start + end.
 ### ⚙️ Setup & Base Project
 
 1. **Initialize App**
-   - Run `npx  @react-native-community/cli@latest init prophet-mobile -t`
+   - Run `npx  @react-native-community/cli@latest init . -t`
    - Confirm app runs on device/simulator
 
 2. **Install Dependencies**
