@@ -52,11 +52,3 @@ const styles = StyleSheet.create({
   header: { fontWeight: 'bold', backgroundColor: '#f0f0f0' },
   invalid: { color: 'red' },
 });
-}
-
-const styles = StyleSheet.create({
-  row: { flexDirection: 'row', borderBottomWidth: 1, borderColor: '#eee' },
-  cell: { flex: 1, padding: 4, fontSize: 12 },
-  header: { fontWeight: 'bold', backgroundColor: '#f0f0f0' },
-  invalid: { color: 'red' },
-});

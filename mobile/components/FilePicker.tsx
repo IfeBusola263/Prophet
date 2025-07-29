@@ -5,7 +5,11 @@ import { parseFile } from '../utils/fileParser';
 
 import ContactPreview from './ContactPreview';
 
-export default function FilePicker() {
+type Props = {
+  onFilePicked?: () => void;
+};
+
+export default function FilePicker({ onFilePicked }: Props) {
   const [fileName, setFileName] = useState<string | null>(null);
   const [parsed, setParsed] = useState<any>(null);
 
@@ -20,6 +24,7 @@ export default function FilePicker() {
       setFileName(file.name || file.uri);
       const result = await parseFile(file);
       setParsed(result);
+      if (onFilePicked) onFilePicked();
     } catch (e) {
       // User cancelled or error
       setFileName(null);
