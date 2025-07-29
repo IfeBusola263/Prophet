@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import campaignService from '../services/campaignService';
+import { useCampaignStore } from '../store/useCampaignStore';
 import FilePicker from '../components/FilePicker';
 
-export default function ComposeScreen() {
-  const [subject, setSubject] = useState('');
-  const [body, setBody] = useState('');
+const ComposeScreen = () => {
+  const { subject, body, contacts, reset, setBody, setSubject } =
+    useCampaignStore();
   const [fileSelected, setFileSelected] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = () => {
+  const [confirmation, setConfirmation] = useState('');
+
+  const handleSubmit = async () => {
     if (!subject || !body || !fileSelected) {
       setError('All fields are required.');
       return;
     }
     setError('');
-    // Submit logic here
+    setConfirmation('');
+    // Call mock service
+    await campaignService.createCampaign({ subject, body, contacts });
+    reset();
+    setFileSelected(false);
+    setConfirmation('Campaign submitted!');
   };
 
   return (
@@ -35,13 +44,28 @@ export default function ComposeScreen() {
         multiline
       />
       <Text style={styles.label}>Contacts File</Text>
-      {/* FilePicker should set fileSelected to true when a file is picked */}
       <FilePicker onFilePicked={() => setFileSelected(true)} />
+
       {error ? <Text style={styles.error}>{error}</Text> : null}
+      {confirmation ? (
+        <Text style={styles.confirmation}>{confirmation}</Text>
+      ) : null}
       <Button title="Submit" onPress={handleSubmit} />
+
+      {/* Preview Section */}
+      <View style={styles.previewSection}>
+        <Text style={styles.previewLabel}>Message Preview:</Text>
+        <Text style={styles.previewText}>Subject: {subject}</Text>
+        <Text style={styles.previewText}>Body: {body}</Text>
+        <Text style={styles.previewLabel}>
+          Contact Count: {contacts?.length || 0}
+        </Text>
+      </View>
     </View>
   );
-}
+};
+
+export default ComposeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -67,5 +91,22 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginTop: 8,
+  },
+  confirmation: {
+    color: 'green',
+    marginTop: 8,
+  },
+  previewSection: {
+    marginTop: 32,
+    padding: 12,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 6,
+  },
+  previewLabel: {
+    fontWeight: 'bold',
+    marginTop: 8,
+  },
+  previewText: {
+    marginTop: 4,
   },
 });
