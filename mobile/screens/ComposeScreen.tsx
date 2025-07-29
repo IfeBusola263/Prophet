@@ -1,16 +1,49 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import Voice from '@react-native-voice/voice';
 import campaignService from '../services/campaignService';
 import { useCampaignStore } from '../store/useCampaignStore';
 import FilePicker from '../components/FilePicker';
 
-const ComposeScreen = () => {
-  const { subject, body, contacts, reset, setBody, setSubject } =
+const ComposeScreen = ({ navigation }: any) => {
+  const { subject, body, contacts, reset, setBody, setSubject, addCampaign } =
     useCampaignStore();
   const [fileSelected, setFileSelected] = useState(false);
   const [error, setError] = useState('');
 
   const [confirmation, setConfirmation] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Voice handlers
+  React.useEffect(() => {
+    Voice.onSpeechResults = e => {
+      if (e.value && e.value.length > 0) {
+        setBody(body + (body ? ' ' : '') + e.value[0]);
+      }
+      setIsRecording(false);
+    };
+    Voice.onSpeechEnd = () => setIsRecording(false);
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, [body, setBody]);
+
+  const startVoice = async () => {
+    setIsRecording(true);
+    try {
+      await Voice.start('en-US');
+    } catch (e) {
+      setIsRecording(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!subject || !body || !fileSelected) {
@@ -19,16 +52,39 @@ const ComposeScreen = () => {
     }
     setError('');
     setConfirmation('');
-    // Call mock service
-    await campaignService.createCampaign({ subject, body, contacts });
-    reset();
-    setFileSelected(false);
-    setConfirmation('Campaign submitted!');
+    setIsSubmitting(true);
+    try {
+      await campaignService.createCampaign({ subject, body, contacts });
+      addCampaign({
+        subject,
+        body,
+        contacts,
+        status: 'Draft',
+        date: new Date().toLocaleString(),
+      });
+      reset();
+      setFileSelected(false);
+      setConfirmation('Campaign submitted!');
+    } catch (err) {
+      setError('Failed to submit campaign.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Subject</Text>
+      <View style={styles.navRow}>
+        <Button
+          title="Back to Campaigns"
+          onPress={() => navigation.navigate('Campaigns')}
+        />
+        <Button
+          title="Analytics"
+          onPress={() => navigation.navigate('Analytics')}
+        />
+      </View>
       <TextInput
         style={styles.input}
         value={subject}
@@ -36,13 +92,22 @@ const ComposeScreen = () => {
         placeholder="Enter subject"
       />
       <Text style={styles.label}>Body</Text>
-      <TextInput
-        style={[styles.input, styles.bodyInput]}
-        value={body}
-        onChangeText={setBody}
-        placeholder="Enter body"
-        multiline
-      />
+      <View style={styles.bodyRow}>
+        <TextInput
+          style={[styles.input, styles.bodyInput, styles.bodyFlex]}
+          value={body}
+          onChangeText={setBody}
+          placeholder="Enter body"
+          multiline
+        />
+        <TouchableOpacity
+          style={styles.micButton}
+          onPress={startVoice}
+          disabled={isRecording}
+        >
+          <Text style={styles.micIcon}>{isRecording ? '🎤...' : '🎤'}</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.label}>Contacts File</Text>
       <FilePicker onFilePicked={() => setFileSelected(true)} />
 
@@ -50,7 +115,11 @@ const ComposeScreen = () => {
       {confirmation ? (
         <Text style={styles.confirmation}>{confirmation}</Text>
       ) : null}
-      <Button title="Submit" onPress={handleSubmit} />
+      <Button
+        title={isSubmitting ? 'Submitting...' : 'Submit'}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      />
 
       {/* Preview Section */}
       <View style={styles.previewSection}>
@@ -96,6 +165,24 @@ const styles = StyleSheet.create({
     color: 'green',
     marginTop: 8,
   },
+  bodyRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bodyFlex: {
+    flex: 1,
+  },
+  micButton: {
+    marginLeft: 8,
+    padding: 8,
+    backgroundColor: '#e3e3e3',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  micIcon: {
+    fontSize: 24,
+  },
   previewSection: {
     marginTop: 32,
     padding: 12,
@@ -108,5 +195,10 @@ const styles = StyleSheet.create({
   },
   previewText: {
     marginTop: 4,
+  },
+  navRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
 });

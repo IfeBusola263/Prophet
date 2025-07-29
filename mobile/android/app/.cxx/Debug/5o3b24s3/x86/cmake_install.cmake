@@ -45,10 +45,14 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rndocumentpickerCGen_autolinked_build/cmake_install.cmake")
+  include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rnskia_autolinked_build/cmake_install.cmake")
+  include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rngesturehandler_codegen_autolinked_build/cmake_install.cmake")
+  include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rnreanimated_autolinked_build/cmake_install.cmake")
   include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/safeareacontext_autolinked_build/cmake_install.cmake")
   include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rnscreens_autolinked_build/cmake_install.cmake")
   include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rnsvg_autolinked_build/cmake_install.cmake")
   include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/RNVectorIconsSpec_autolinked_build/cmake_install.cmake")
+  include("/Users/ifebusola/Prophet/mobile/android/app/.cxx/Debug/5o3b24s3/x86/rnworklets_autolinked_build/cmake_install.cmake")
 
 endif()
 
