@@ -1,0 +1,68 @@
+# ------------------------
+# Prophet Mobile (React Native CLI)
+# ------------------------
+
+# macOS
+/mobile/.DS_Store
+
+# Xcode
+/mobile/ios/build/
+**/*.pbxuser
+!**/default.pbxuser
+**/*.mode1v3
+!**/default.mode1v3
+**/*.mode2v3
+!**/default.mode2v3
+**/*.perspectivev3
+!**/default.perspectivev3
+/mobile/ios/xcuserdata/
+**/*.xccheckout
+**/*.moved-aside
+/mobile/ios/DerivedData/
+**/*.hmap
+**/*.ipa
+**/*.xcuserstate
+**/.xcode.env.local
+
+# Android/IntelliJ
+/mobile/android/.gradle/
+**/build/
+**/*.iml
+/mobile/android/.idea/
+**/*.hprof
+/mobile/android/.cxx/
+**/*.keystore
+!**/debug.keystore
+/mobile/android/.kotlin/
+
+# Node modules
+/mobile/node_modules/
+**/npm-debug.log
+**/yarn-error.log
+
+# Fastlane (if used)
+/mobile/fastlane/report.xml
+/mobile/fastlane/Preview.html
+/mobile/fastlane/screenshots/
+/mobile/fastlane/test_output/
+
+# Bundle output
+/mobile/**/*.jsbundle
+
+# CocoaPods
+/mobile/ios/Pods/
+/mobile/vendor/bundle/
+
+# Metro health check
+/mobile/.metro-health-check*
+
+# Coverage
+/mobile/coverage/
+
+# Yarn cache
+/mobile/.yarn/*
+!/mobile/.yarn/patches
+!/mobile/.yarn/plugins
+!/mobile/.yarn/releases
+!/mobile/.yarn/sdks
+!/mobile/.yarn/versions
